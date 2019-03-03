@@ -37,14 +37,12 @@ const Playground = () => {
   // replaySubject.next(3) // 3
   // replaySubject.subscribe(log) // 2, 3
 
-
-
   useEffect(() => {
     const observable = fromEvent(document.querySelector('#btn'), 'click')
     const pipe = observable.pipe(
       switchMap(() => interval(1000))
     )
-    pipe.subscribe(log)
+    pipe.subscribe(log) // 1, 2, 3, 4, ...
   }, [])
 
   return <>
