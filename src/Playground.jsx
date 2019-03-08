@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { BehaviorSubject, fromEvent, interval, of, ReplaySubject, Subject } from 'rxjs'
-import { flatMap, switchMap } from 'rxjs/operators'
+import { race } from 'rxjs';
+import { flatMap, switchMap, catchError, mapTo } from 'rxjs/operators'
 const log = x => console.log(x)
 
 const Playground = () => {
@@ -38,12 +39,16 @@ const Playground = () => {
   // replaySubject.subscribe(log) // 2, 3
 
   useEffect(() => {
-    const observable = fromEvent(document.querySelector('#btn'), 'click')
-    const pipe = observable.pipe(
-      switchMap(() => interval(1000))
-    )
-    pipe.subscribe(log) // 1, 2, 3, 4, ...
+    const example = race(
+      interval(1500),
+      interval(1000).pipe(mapTo('1s won!')),
+      interval(2000),
+      interval(2500)
+    );
+    const subscribe = example.subscribe(val => console.log(val));
   }, [])
+
+
 
   return <>
     <button id="btn">Click!</button>

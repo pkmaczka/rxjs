@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { fromEvent } from 'rxjs';
-import { tap, throttleTime, debounceTime, scan } from 'rxjs/operators'
+import { tap, throttleTime, debounceTime, map } from 'rxjs/operators'
 import Button from '@material-ui/core/Button';
 
 // 1. Dodać funkcjonalność licznika przy pomocy funkcji scan
@@ -11,18 +11,17 @@ export default class Zadanie1 extends Component {
         super(props)
 
         this.state = {
-            counter: 0
+            counter: 0,
         }
     }
 
     componentDidMount() {
+
         fromEvent(this.ref, 'click')
         .pipe(
-            throttleTime(500),
-            scan(x => x+1, 0),
-            tap(x => this.setState({counter: x})),
+            tap(_ => this.setState({counter: this.state.counter+1})),
         )
-        .subscribe((x) => console.log(`Clicked ${this.state.counter} times`));
+        .subscribe();
     }
 
     render = () => (
