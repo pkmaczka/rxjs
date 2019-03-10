@@ -23,7 +23,6 @@ export default class Zadanie1 extends Component {
         .pipe(
             throttleTime(500),
             scan(x => x+1, 0),
-
             tap(x => this.setState({counter: x})),
         )
         .subscribe((x) => console.log(`Clicked ${this.state.counter} times`));
