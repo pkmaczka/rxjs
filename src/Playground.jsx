@@ -1,4 +1,4 @@
-import React, from 'react'
+import React from 'react'
 
 const Playground = () => {
   source.pipe(scan((acc, curr) => acc + curr, 0));
@@ -8,5 +8,6 @@ const Playground = () => {
     <button id="stop">Stop</button>
   </>
 }
+
 
 export default Playground
